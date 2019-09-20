@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useRef } from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { useDidMount } from '..'
 
