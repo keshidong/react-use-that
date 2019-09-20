@@ -1,8 +1,8 @@
 import { useRef, useCallback } from 'react'
 
-export default (value) => {
+export default value => {
     const ref = useRef(null)
     ref.current = value
 
-    return useCallback(() => (ref.current), [])
+    return useCallback(() => ref.current, [])
 }

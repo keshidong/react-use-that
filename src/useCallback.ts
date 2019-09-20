@@ -6,5 +6,5 @@ export default (fn, deps) => {
     const ref = useRef(() => {})
     ref.current = cb
 
-    return useCallback(() => (ref.current()), [])
+    return useCallback(() => ref.current(), [])
 }
