@@ -1,6 +1,6 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, DependencyList } from 'react'
 
-export default (fn, deps) => {
+export default (fn, deps: DependencyList) => {
     const cb = useCallback(fn, deps)
 
     const ref = useRef(() => {})

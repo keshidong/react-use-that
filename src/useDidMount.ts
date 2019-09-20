@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, DependencyList } from 'react'
 import useCallback from './useCallback'
 
-export default (fn, deps) => {
+export default (fn, deps: DependencyList) => {
     const cb = useCallback(fn, deps)
     useEffect(() => {
-        cb()
+        return cb()
     }, [])
 }
