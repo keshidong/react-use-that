@@ -20,6 +20,7 @@
     "build:cjs": "tsc",
     "build:es": "tsc -m esNext --outDir esm",
     "build": "yarn build:cjs && yarn build:es",
+    "clean": "rimraf lib esm",
     "release": "semantic-release"
   },
   "husky": {
@@ -50,6 +51,8 @@
     "@semantic-release/changelog": "3.0.4",
     "@semantic-release/git": "7.0.16",
     "@semantic-release/npm": "5.1.13",
+    "@testing-library/react-hooks": "2.0.1",
+    "react-test-renderer": "16.9.0",
     "@types/jest": "24.0.18",
     "@types/react": "16.9.2",
     "babel-core": "6.26.3",
@@ -60,6 +63,7 @@
     "prettier": "1.18.2",
     "react": "16.9.0",
     "react-dom": "16.9.0",
+    "rimraf": "^3.0.0",
     "semantic-release": "15.13.24",
     "tslint": "5.20.0",
     "tslint-config-prettier": "1.18.0",
