@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { renderHook } from '@testing-library/react-hooks'
 import { useDidMount } from '..'
 
@@ -25,34 +24,20 @@ it('should not call provided callback on unmount', () => {
 })
 
 it('should call provided callback on rerender when state change', () => {
-    let state = 0
-    const { rerender } = renderHook(() => useDidMount(mockCallback, [state]))
+    const { rerender } = renderHook(({ count }) => useDidMount(mockCallback, [count]), { initialProps: { count: 0 }})
 
-    state = 1
-    rerender()
+    rerender({ count: 1 })
 
     expect(mockCallback).toHaveBeenCalledTimes(1)
 })
 
-it('should call provided callback on rerender when state change', () => {
-    let mockcb
-    const { result, rerender } = renderHook(
-        ({ count }) => {
-            const ref = useRef(0)
+it('should run clean-up provided on unmount', () => {
+    const mockEffectCleanup = jest.fn()
+    const mockEffectCallback = jest.fn().mockReturnValue(mockEffectCleanup)
 
-            mockcb = jest.fn(() => {
-                ref.current = count
-            })
-            useDidMount(mockcb, [count])
+    const { unmount } = renderHook(() => useDidMount(mockEffectCallback, []))
+    expect(mockEffectCleanup).not.toHaveBeenCalled()
 
-            return ref
-        },
-        { initialProps: { count: 0 } }
-    )
-
-    rerender({ count: 1 })
-
-    expect(result.current.current).toEqual(0)
-    expect(result.current.current).toEqual(1)
-    expect(mockCallback).toHaveBeenCalledTimes(1)
+    unmount()
+    expect(mockEffectCleanup).toHaveBeenCalledTimes(1)
 })
