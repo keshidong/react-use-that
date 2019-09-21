@@ -9,11 +9,11 @@ afterEach(() => {
 
 it('should keep same ref after props/state change', () => {
     let cbRef
-    const {rerender} = renderHook(
-        ({count}) => {
+    const { rerender } = renderHook(
+        ({ count }) => {
             cbRef = useCallback(mockCallback, [count])
         },
-        {initialProps: {count: 0}}
+        { initialProps: { count: 0 } }
     )
 
     const ref1 = cbRef

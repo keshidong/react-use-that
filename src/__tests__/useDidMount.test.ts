@@ -24,7 +24,7 @@ it('should not call provided callback on unmount', () => {
 })
 
 it('should call provided callback on rerender when state change', () => {
-    const { rerender } = renderHook(({ count }) => useDidMount(mockCallback, [count]), { initialProps: { count: 0 }})
+    const { rerender } = renderHook(({ count }) => useDidMount(mockCallback, [count]), { initialProps: { count: 0 } })
 
     rerender({ count: 1 })
 
