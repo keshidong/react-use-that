@@ -1,12 +1,12 @@
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect } from 'react'
 
 export default (): (() => boolean) => {
-    const ref = useRef<boolean>(false)
+    const ref = useRef(false)
     useEffect(() => {
         ref.current = true
         return () => {
             ref.current = false
         }
     }, [])
-    return useCallback(() => ref.current, [])
+    return () => ref.current
 }

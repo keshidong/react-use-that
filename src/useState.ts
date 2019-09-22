@@ -2,7 +2,7 @@ import { useState as useStateBasic, useRef, useEffect } from 'react'
 
 // const NOOP = () => {}
 type EffectCallback = () => void
-type Dispatch<A, B> = (value: A, callback: B) => void
+type Dispatch<A, B> = (value: A, callback?: B) => void
 type SetStateAction<S> = S | ((prevState: S) => S)
 interface MutableRefObject<T> {
     current: T
@@ -26,10 +26,10 @@ function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S
     return [
         state,
         (s, callback?: EffectCallback) => {
-            if (typeof callback !== 'function') {
-                throw new Error('The second argument must be a function')
-            }
             if (callback) {
+                if (typeof callback !== 'function') {
+                    throw new Error('The second argument must be a function')
+                }
                 // aviod react bat setState
                 const cbKeeper = {
                     cb: callback,

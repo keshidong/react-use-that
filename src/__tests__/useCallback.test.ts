@@ -6,10 +6,9 @@ afterEach(() => {
 })
 
 it('should keep same ref after props/state change', () => {
-    const {result, rerender} = renderHook(
+    const { result, rerender } = renderHook(
         ({ count }) => {
-            return useCallback(() => {
-            }, [count])
+            return useCallback(() => {}, [count])
         },
         { initialProps: { count: 0 } }
     )
@@ -21,7 +20,7 @@ it('should keep same ref after props/state change', () => {
 })
 
 it('should have same output with React/useCallback after props/state change', () => {
-    const {result, rerender} = renderHook(
+    const { result, rerender } = renderHook(
         ({ count }) => {
             return useCallback(() => count, [count])
         },

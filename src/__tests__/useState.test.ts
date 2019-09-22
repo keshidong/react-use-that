@@ -1,11 +1,11 @@
-import {renderHook, act} from '@testing-library/react-hooks'
-import {useState} from '..'
+import { renderHook, act } from '@testing-library/react-hooks'
+import { useState } from '..'
 
 it('should has same function with React/useState', () => {
-    const {result} = renderHook(() => {
+    const { result } = renderHook(() => {
         const [count, setCount] = useState(0)
 
-        return {count, setCount}
+        return { count, setCount }
     })
 
     expect(result.current.count).toEqual(0)
@@ -26,10 +26,10 @@ it('should callback be called when didUpdate', () => {
 it('should callback be called once', () => {
     const mockCallback = jest.fn()
 
-    const {result} = renderHook(() => {
+    const { result } = renderHook(() => {
         const [count, setCount] = useState(0)
 
-        return {count, setCount}
+        return { count, setCount }
     })
 
     act(() => {
@@ -45,10 +45,10 @@ it('should callback be called with correct order', () => {
     const mockCallback1 = jest.fn()
     const mockCallback2 = jest.fn()
 
-    const {result} = renderHook(() => {
+    const { result } = renderHook(() => {
         const [count, setCount] = useState(0)
 
-        return {count, setCount}
+        return { count, setCount }
     })
 
     act(() => {
