@@ -1,16 +1,26 @@
 <h1>
     <br />
     react-use-that
-    <br />
-    <h3>Basic and powful react hooks</h3>
 </h1>
+<sup>
+    <a href="https://www.npmjs.com/package/react-use-that">
+       <img src="https://img.shields.io/npm/v/react-use-that.svg" alt="npm package" />
+    </a>
+    <a href="https://travis-ci.com/keshidong/react-use-that">
+      <img src="https://travis-ci.com/keshidong/react-use-that.svg?branch=master" alt="travis master" />
+    </a>
+  </sup>
+<br />
+<h3>Basic and powful react hooks</h3>
 
+## Install
+<pre>npm i <a href="https://www.npmjs.com/package/react-use">react-use</a></pre>
+  
 ## Usages
 #### useCallback
 
 *"useCallback Hooks"* same as react/useCallback, more powerful than react/usecallback, the reference of useCallback's return value is unchanged.
 
-#####for example
 ```javascript
 import { useCallback } from 'react-use-that'
 export default ({ p }) => {
@@ -25,7 +35,6 @@ export default ({ p }) => {
 
 *"useCurrent Hooks"* can get the value of the latest render function execution context.
 
-#####for example
 
 ```javascript
 import { useCurrent } from 'react-use-that'
