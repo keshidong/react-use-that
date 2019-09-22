@@ -1,5 +1,5 @@
 {
-  "name": "use-that",
+  "name": "react-use-that",
   "version": "1.0.0",
   "description": "Basic and powful react hooks",
   "main": "lib/index.js",
@@ -33,12 +33,12 @@
   "license": "Unlicense",
   "repository": {
     "type": "git",
-    "url": "git@github.com:keshidong/use-that.git"
+    "url": "git@github.com:keshidong/react-use-that.git"
   },
   "bugs": {
-    "url": "https://github.com/keshidong/use-that/issues"
+    "url": "https://github.com/keshidong/react-use-that/issues"
   },
-  "homepage": "https://github.com/keshidong/use-that#readme",
+  "homepage": "https://github.com/keshidong/react-use-that#readme",
   "peerDependencies": {
     "react": "^16.8.0"
   },
