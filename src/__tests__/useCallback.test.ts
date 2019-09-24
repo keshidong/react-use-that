@@ -30,3 +30,10 @@ it('should have same output with React/useCallback after props/state change', ()
     rerender({ count: 1 })
     expect(result.current()).toEqual(1)
 })
+
+it('should params work same with React/useCallback', () => {
+    const { result } = renderHook(() => {
+        return useCallback((...args) => args, [])
+    })
+    expect(result.current(1, 2)).toEqual([1, 2])
+})
