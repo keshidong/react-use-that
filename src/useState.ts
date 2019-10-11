@@ -15,7 +15,7 @@ interface MutableRefObject<T> {
     current: T
 }
 
-function useState<S extends undefined = undefined>(
+function useState<S extends any | undefined = undefined>(
     initialState: S
 ): [S, Dispatch<SetStateAction<S>, EffectCallback<S>>] {
     const [state, setState] = useStateBasic(initialState)
@@ -37,7 +37,13 @@ function useState<S extends undefined = undefined>(
         state,
         (s, callback?: EffectCallback<S>) => {
             setState(prevState => {
-                const currentState = typeof s === 'function' ? s(prevState) : s
+                const currentState =
+                    typeof s === 'function'
+                        ? (() => {
+                              const sCb = s as (prevState: S | undefined) => S
+                              return sCb(prevState)
+                          })()
+                        : s
 
                 if (callback) {
                     if (typeof callback !== 'function') {
