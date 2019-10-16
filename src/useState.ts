@@ -1,14 +1,12 @@
 import { useState as useStateBasic, useRef, useEffect } from 'react'
 import objectIs from './utils/objectIs'
 
-type EffectCallback<S> = ([prevState, currentState]: [S, S]) => void
+type EffectCallback = () => void
 type Dispatch<A, B> = (value: A, callback?: B) => void
 type SetStateAction<S> = S | ((prevState: S) => S)
 
-interface CallbackKeeper<S> {
-    cb: EffectCallback<S>
-    prevState: S
-    currentState: S
+interface CallbackKeeper {
+    cb: EffectCallback
 }
 
 interface MutableRefObject<T> {
@@ -17,9 +15,9 @@ interface MutableRefObject<T> {
 
 function useState<S extends any | undefined = undefined>(
     initialState: S
-): [S, Dispatch<SetStateAction<S>, EffectCallback<S>>] {
+): [S, Dispatch<SetStateAction<S>, EffectCallback>] {
     const [state, setState] = useStateBasic(initialState)
-    const callbackKeeperRef: MutableRefObject<Array<CallbackKeeper<S>>> = useRef([])
+    const callbackKeeperRef: MutableRefObject<CallbackKeeper[]> = useRef([])
 
     useEffect(() => {
         while (true) {
@@ -28,14 +26,14 @@ function useState<S extends any | undefined = undefined>(
                 break
             }
 
-            cbKeeper.cb([cbKeeper.prevState, cbKeeper.currentState])
+            cbKeeper.cb()
         }
         // `state` use for corresponding to state and effect
     }, [state])
 
     return [
         state,
-        (s, callback?: EffectCallback<S>) => {
+        (s, callback?: EffectCallback) => {
             setState(prevState => {
                 const currentState =
                     typeof s === 'function'
@@ -51,13 +49,11 @@ function useState<S extends any | undefined = undefined>(
                     }
 
                     if (objectIs(prevState, currentState)) {
-                        callback([prevState, currentState])
+                        callback()
                     } else {
                         // aviod react bat setState
                         const cbKeeper = {
                             cb: callback,
-                            prevState,
-                            currentState,
                         }
                         callbackKeeperRef.current.push(cbKeeper)
                     }
