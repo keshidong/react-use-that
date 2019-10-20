@@ -14,7 +14,7 @@
 <h3>Basic and powful react hooks</h3>
 
 ## Install
-<pre>npm i <a href="https://www.npmjs.com/package/react-use">react-use</a></pre>
+<pre>npm i <a href="https://www.npmjs.com/package/react-use-that">react-use-that</a></pre>
   
 ## Usages
 #### useCallback
