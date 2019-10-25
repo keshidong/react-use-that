@@ -73,13 +73,7 @@
     "typescript": "3.5.3"
   },
   "release": {
-    "branches": [
-      "master",
-      {
-        "name": "next",
-        "prerelease": "rc"
-      }
-    ],
+    "branch": "release",
     "verifyConditions": [
       "@semantic-release/changelog",
       "@semantic-release/npm",
@@ -100,5 +94,8 @@
   "volta": {
     "node": "10.16.3",
     "yarn": "1.15.2"
+  },
+  "dependencies": {
+    "react-fast-compare": "^2.0.4"
   }
 }

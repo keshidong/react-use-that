@@ -60,3 +60,23 @@ it('should callback be called with correct order', () => {
     })
     expect(mockCallback2).toBeCalledTimes(1)
 })
+
+it('`setState` callback should be called once when `state` not changed', () => {
+    const mockCallback = jest.fn()
+
+    const { result } = renderHook(() => {
+        const [count, setCount] = useState(0)
+
+        return { count, setCount }
+    })
+
+    act(() => {
+        result.current.setCount(0, mockCallback)
+    })
+    expect(mockCallback).toBeCalledTimes(1)
+
+    act(() => {
+        result.current.setCount(2)
+    })
+    expect(mockCallback).toBeCalledTimes(1)
+})
