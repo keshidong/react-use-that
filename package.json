@@ -73,13 +73,7 @@
     "typescript": "3.5.3"
   },
   "release": {
-    "branches": [
-      "master",
-      {
-        "name": "next",
-        "prerelease": "rc"
-      }
-    ],
+    "branch": "release",
     "verifyConditions": [
       "@semantic-release/changelog",
       "@semantic-release/npm",
