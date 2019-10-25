@@ -1,16 +1,23 @@
 import { useState as useStateBasic, useRef, useEffect } from 'react'
+import objectIs from './utils/objectIs'
 
-// const NOOP = () => {}
 type EffectCallback = () => void
 type Dispatch<A, B> = (value: A, callback?: B) => void
 type SetStateAction<S> = S | ((prevState: S) => S)
+
+interface CallbackKeeper {
+    cb: EffectCallback
+}
+
 interface MutableRefObject<T> {
     current: T
 }
 
-function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>, EffectCallback>] {
+function useState<S extends any | undefined = undefined>(
+    initialState: S
+): [S, Dispatch<SetStateAction<S>, EffectCallback>] {
     const [state, setState] = useStateBasic(initialState)
-    const callbackKeeperRef: MutableRefObject<Array<{ cb: EffectCallback }>> = useRef([])
+    const callbackKeeperRef: MutableRefObject<CallbackKeeper[]> = useRef([])
 
     useEffect(() => {
         while (true) {
@@ -21,22 +28,39 @@ function useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S
 
             cbKeeper.cb()
         }
+        // `state` use for corresponding to state and effect
     }, [state])
 
     return [
         state,
         (s, callback?: EffectCallback) => {
-            if (callback) {
-                if (typeof callback !== 'function') {
-                    throw new Error('The second argument must be a function')
+            setState(prevState => {
+                const currentState =
+                    typeof s === 'function'
+                        ? (() => {
+                              const sCb = s as (prevState: S | undefined) => S
+                              return sCb(prevState)
+                          })()
+                        : s
+
+                if (callback) {
+                    if (typeof callback !== 'function') {
+                        throw new Error('The second argument must be a function')
+                    }
+
+                    if (objectIs(prevState, currentState)) {
+                        callback()
+                    } else {
+                        // aviod react bat setState
+                        const cbKeeper = {
+                            cb: callback,
+                        }
+                        callbackKeeperRef.current.push(cbKeeper)
+                    }
                 }
-                // aviod react bat setState
-                const cbKeeper = {
-                    cb: callback,
-                }
-                callbackKeeperRef.current.push(cbKeeper)
-            }
-            setState(s)
+
+                return currentState
+            })
         },
     ]
 }
