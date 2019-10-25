@@ -1,6 +1,6 @@
 {
   "name": "react-use-that",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Basic and powful react hooks",
   "main": "lib/index.js",
   "module": "esm/index.js",
@@ -73,13 +73,7 @@
     "typescript": "3.5.3"
   },
   "release": {
-    "branches": [
-      "master",
-      {
-        "name": "next",
-        "prerelease": "rc"
-      }
-    ],
+    "branch": "v1.0.4",
     "verifyConditions": [
       "@semantic-release/changelog",
       "@semantic-release/npm",
@@ -100,5 +94,8 @@
   "volta": {
     "node": "10.16.3",
     "yarn": "1.15.2"
+  },
+  "publishConfig": {
+    "tag": "legacy"
   }
 }
